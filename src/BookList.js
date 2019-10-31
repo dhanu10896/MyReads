@@ -1,6 +1,19 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
 import NavBar from './NavBar';
+import BookCase from './BookCase';
+import OpenSearch from './OpenSearch';
 import './App.css'
-import { Route, Link } from 'react-router-dom'
-import { debounce } from 'throttle-debounce';
+
+class BookList extends React.Component {
+    render() {
+        return (
+            <div className="list-books">
+                <NavBar navName='Your Reads' />
+                <BookCase bookshelves={this.props.bookshelves} books={this.props.books} moveShelf={this.props.moveShelf} />
+                <OpenSearch />
+            </div>
+        )
+    }
+}
+
+export default BookList;

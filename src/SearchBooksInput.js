@@ -1,6 +1,17 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import NavBar from './NavBar';
 import './App.css'
-import { Route, Link } from 'react-router-dom'
-import { debounce } from 'throttle-debounce';
+
+class SearchBooksInput extends React.Component {
+    render() {
+        return (
+            <div className="search-books-input-wrapper">
+                <input
+                    type="text"
+                    placeholder="Search by title or author"
+                    onChange={this.props.onSearch}/>
+            </div>
+        )
+    }
+}
+
+export default SearchBooksInput;
