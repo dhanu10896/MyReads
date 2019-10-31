@@ -1,52 +1,39 @@
-# MyReads Project
+# MyReads
 
+MyReads is a simple cataloging app that allows you to place books in one of three shelves or categories.
 
-## Backend Server 
+- Currently Reading
+- Want to Read
+- Read
 
-The provided file [`BooksAPI.js`](src/BooksAPI.js) is used to deal with backend stuff.
+It also allow you to search for books based on title and author.
 
-* [`getAll`](#getall)
-* [`update`](#update)
-* [`search`](#search)
+- **Live Demo:** [])
 
-### `getAll`
+You can see [screenshots](#screenshots) below.
 
-Method Signature:
+## Installation
 
-```js
-getAll()
+Clone the repository, change directories, and use NPM to install the dependencies.
+
+```bash
+$ git clone https://github.com/dhanu10896/MyReads.git
+$ cd MyReads
+$ npm install
 ```
 
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
+## Usage
 
-### `update`
+The project can be run with
 
-Method Signature:
+- `npm start`
 
-```js
-update(book, shelf)
-```
+The project can be viewed in the browser at
 
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
+- [http://localhost:3000](http://localhost:3000)
 
-### `search`
+## Screenshots
 
-Method Signature:
+![screenshot1](./docs/p1.jpg)
 
-```js
-search(query)
-```
-
-* query: `<String>`
-* Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
-
-## Important
-The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
-
-## Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+![screenshot2](./docs/p2.jpg)
