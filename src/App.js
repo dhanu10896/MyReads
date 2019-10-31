@@ -44,6 +44,12 @@ class App extends React.Component {
       BooksAPI.update(bookToAdd, shelfName)
     }
 
+    this.clearSearch = () => {
+      this.setState({
+        searchResult:[]
+      })
+    }
+
     this.onSearch = (query) => {
       BooksAPI.search(query).then(searchResponse => {
         this.setState({ searchResult: searchResponse })
@@ -70,7 +76,8 @@ class App extends React.Component {
           books={this.state.books} 
           onSearch={this.onSearch} 
           searchResult={this.state.searchResult}
-          moveShelf = {this.addSearchedBookToShelf}/>
+          moveShelf = {this.addSearchedBookToShelf}
+          clearSearch = {this.clearSearch}/>
         )} />
         <Route exact path="/" render={() => (
           <BookList bookshelves={this.bookshelves} books={this.state.books} moveShelf={this.onMoveShelf} />
@@ -109,7 +116,7 @@ class SearchBooksInput extends React.Component {
 class CloseSearchButton extends React.Component {
   render() {
     return (
-      <Link to='/'>
+      <Link to='/'onClick={this.props.clearSearch}>
         <button className="close-search"  >Close</button>
       </Link>
     )
@@ -119,7 +126,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <div className="search-books-bar">
-        <CloseSearchButton />
+        <CloseSearchButton clearSearch = {this.props.clearSearch}/>
         <SearchBooksInput onSearch={this.props.onSearch} />
       </div>
     )
@@ -142,7 +149,7 @@ class BookSearch extends React.Component {
   render() {
     return (
       <div className="search-books">
-        <SearchBar onSearch={this.onSearch} />
+        <SearchBar onSearch={this.onSearch} clearSearch={this.props.clearSearch} />
         {this.props.searchResult!=undefined && this.props.searchResult.length > 0 &&
           <SearchResults 
           books={this.props.searchResult} 
