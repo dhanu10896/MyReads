@@ -51,9 +51,18 @@ class App extends React.Component {
     }
 
     this.onSearch = (query) => {
-      BooksAPI.search(query).then(searchResponse => {
-        this.setState({ searchResult: searchResponse })
-      })
+      if(query.length > 0) {
+        BooksAPI.search(query).then(searchResponse => {
+          if(searchResponse.error) {
+            this.clearSearch()
+          } else {
+            this.setState({ searchResult: searchResponse })
+          }
+        })
+      } else {
+        this.clearSearch()
+      }
+      
     }
   }
 
