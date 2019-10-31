@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import NavBar from './NavBar';
 import './App.css'
 import { Route, Link } from 'react-router-dom'
+import { debounce } from 'throttle-debounce';
 
 
 
@@ -35,13 +36,16 @@ class App extends React.Component {
     }
     
     this.addSearchedBookToShelf = (bookToAdd, shelfName) => {
-      bookToAdd.shelf = shelfName;
-      var tempBooks = this.state.books;
-      tempBooks.push(bookToAdd)
-      this.setState({
-        books : tempBooks
-      })
-      BooksAPI.update(bookToAdd, shelfName)
+      if(shelfName !== 'none') {
+        BooksAPI.update(bookToAdd, shelfName)
+        let updatedBooks = this.state.myBooks.filter(b => b.id !== bookToAdd.id);
+        bookToAdd.shelf = shelfName;
+        updatedBooks.concat(bookToAdd)
+        this.setState({
+          books : updatedBooks
+        })
+      }
+    
     }
 
     this.clearSearch = () => {
@@ -50,7 +54,7 @@ class App extends React.Component {
       })
     }
 
-    this.onSearch = (query) => {
+    this.onSearch = debounce(300, false, query => {
       if(query.length > 0) {
         BooksAPI.search(query).then(searchResponse => {
           if(searchResponse.error) {
@@ -63,7 +67,7 @@ class App extends React.Component {
         this.clearSearch()
       }
       
-    }
+    })
   }
 
   componentDidMount = () => {
@@ -170,24 +174,20 @@ class BookSearch extends React.Component {
 }
 class Book extends React.Component {
   render() {
-    const imageLink = this.props.bookDetails.imageLinks != undefined ?
-    this.props.bookDetails.imageLinks.thumbnail : '';
     const { bookDetails, moveShelf } = this.props;
 
     return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${imageLink})` }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookDetails.imageLinks  
+              && bookDetails.imageLinks.thumbnail})` }}></div>
             <BookShelfChanger bookToUpdate={bookDetails} currentShelf={bookDetails.shelf} moveShelf={moveShelf} />
           </div>
           <div className="book-title">
             {bookDetails.title}
-          </div> {bookDetails.authors != undefined &&
-            <div className="book-authors">{bookDetails.authors.map(author => (
-              author + " "
-            ))}</div>
-          }
+          </div> 
+            <div className="book-authors">{bookDetails.authors && bookDetails.authors.join(', ')}</div>
         </div>
       </li>
     )
@@ -264,14 +264,6 @@ class BookList extends React.Component {
     )
   }
 }
-class OpenSearch extends React.Component {
-  render() {
-    return (
-      <div className="open-search">
-        <Link to="/search" ><button>Add a book</button></Link>
-      </div>
-    )
-  }
-}
+
 
 export default App
