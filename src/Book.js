@@ -19,7 +19,9 @@ class Book extends React.Component {
                     <div className="book-title">
                         {bookDetails.title}
                     </div>
-                    <div className="book-authors">{bookDetails.authors && bookDetails.authors.join(', ')}</div>
+                    <div className="book-authors">
+                        {bookDetails.authors ? bookDetails.authors.join(', ') : 'Unknown Author'}
+                    </div>
                 </div>
             </li>
         )

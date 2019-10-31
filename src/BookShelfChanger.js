@@ -5,17 +5,15 @@ class BookShelfChanger extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentShelf: "none"
+            currentShelf: this.props.shelf
         }
 
         this.onMove = event => {
-            this.setState({ currentShelf: event.target.value })
+            const { value } = event.target;
+
+            this.setState({ currentShelf: value })
             this.props.moveShelf(this.props.bookToUpdate, event.target.value)
         }
-    }
-    componentDidMount() {
-        this.setState({ currentShelf: this.props.currentShelf })
-
     }
     render() {
         return (
