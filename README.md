@@ -8,7 +8,7 @@ MyReads is a simple cataloging app that allows you to place books in one of thre
 
 It also allow you to search for books based on title and author.
 
-- **Live Demo:** [])
+- **Live Demo:** [http://167.114.115.85:3002/])
 
 You can see [screenshots](#screenshots) below.
 
