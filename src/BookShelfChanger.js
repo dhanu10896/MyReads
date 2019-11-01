@@ -5,7 +5,7 @@ class BookShelfChanger extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentShelf: this.props.currentShelf
+            currentShelf: ''
         }
 
         this.onMove = event => {
@@ -14,6 +14,12 @@ class BookShelfChanger extends React.Component {
             this.setState({ currentShelf: value })
             this.props.moveShelf(this.props.bookToUpdate, value)
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            currentShelf : this.props.currentShelf
+        })
     }
     render() {
         return (

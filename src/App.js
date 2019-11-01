@@ -59,6 +59,7 @@ class App extends React.Component {
             if (searchResponse.error) {
               this.clearSearch()
             } else {
+              debugger
               this.setState({ searchResult: searchResponse })
             }
           })
